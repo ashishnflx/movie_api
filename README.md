@@ -74,3 +74,26 @@ Response: It will return rating of this episode.
 Request: localhost:8080/series/Stella/season/6/episode/5/rating/8.0
 Response: It will update the rating of this episode which impacts season ratings.
 
+# Database Design
+   
+  https://github.com/ashishnflx/movie_api/edit/master/model.pdf
+  
+  I created two columns, rating_sum and num_of_episodes for a season.
+  This will prevent us on locking the table to get total episodes and doing the total sum of ratings for that season.
+  Now only thing to worry about here is that commit to both episode rating and season rating should happen together.
+  
+  Note - The tool used for generation of entity diagram removed Primary Key and Foreign Key from the diagrams.
+  
+
+# Code for rating update
+
+  Steps:
+  1. Get titleId and episodeId.
+  2. Open a transaction which either commits both episode rating and season rating.
+  3. Calculate difference between current episode rating and new episode rating.
+  4. Update episode rating.
+  5. Add the difference to season rating (rating_sum)
+  
+  Whenever season rating call is made, it picks up total episodes for that season and total rating sum for that season from     the database and query does division between them.
+  
+
