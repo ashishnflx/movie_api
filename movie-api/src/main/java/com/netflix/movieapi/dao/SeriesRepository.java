@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.scheduling.annotation.Async;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public interface SeriesRepository extends TitlesRepository {
 
@@ -31,10 +32,10 @@ public interface SeriesRepository extends TitlesRepository {
             "AND s.title_name = ?1 AND e.season_num = ?2 AND e.episode_num = ?3 LIMIT 1", nativeQuery = true)
     Episode findEpisodeRating(String titleName, int season, int episode);
 
-    @Async
+    @Async("threadPoolTaskExecutor")
     @Query(value = "SELECT e.episode_id FROM episode e, titles s " +
             "WHERE s.title_id = e.title_id " +
             "AND s.title_name = ?1 AND e.season_num = ?2 AND e.episode_num = ?3 LIMIT 1", nativeQuery = true)
-    String findEpisodeId(String titleName, int season, int episode);
+    CompletableFuture<String> findEpisodeId(String titleName, int season, int episode);
 
 }

@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @RestController
 public class SeriesController {
@@ -78,8 +79,18 @@ public class SeriesController {
                                       ) {
 
         //episodeId and titleId calls are Async calls as they are not dependent
-        String episodeId = seriesRepository.findEpisodeId(seriesName, season, episode);
-        String titleId = seriesRepository.findTitleId(seriesName, TitleType.SERIES.getType());
+        String titleId = null;
+        String episodeId = null;
+        try {
+            CompletableFuture<String> episodeIdFuture = seriesRepository.findEpisodeId(seriesName, season, episode);
+            CompletableFuture<String> titleIdFuture = seriesRepository.findTitleId(seriesName, TitleType.SERIES.getType());
+            CompletableFuture.allOf(episodeIdFuture, titleIdFuture).join();
+            titleId = titleIdFuture.get();
+            episodeId = episodeIdFuture.get();
+        }
+        catch(Exception e) {
+            return ResponseHandler.getServerErrorResponse(e.getStackTrace().toString());
+        }
         String errors = checkUpdateErrors(titleId,episodeId, rating);
         if(errors != null) return ResponseHandler.getErrorResponse(errors);
         try {

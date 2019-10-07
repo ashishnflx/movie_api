@@ -181,24 +181,36 @@ public class SeriesControllerTest {
 
     @Test
     public void testRatingUpdateNegRate() {
-        when(seriesRepository.findEpisodeId("testSeries",1, 5)).thenReturn("e1");
-        when(seriesRepository.findTitleId("testSeries", "tvSeries")).thenReturn("t1");
-        String result = (String)seriesController.updateEpisodeRating("testSeries",1, 5, -5).getBody();
-        assertEquals(RatingUpdateStatus.NEGATIVE_RATING, result);
+        try {
+            when(seriesRepository.findEpisodeId("testSeries", 1, 5).get()).thenReturn("e1");
+            when(seriesRepository.findTitleId("testSeries", "tvSeries").get()).thenReturn("t1");
+            String result = (String) seriesController.updateEpisodeRating("testSeries", 1, 5, -5).getBody();
+            assertEquals(RatingUpdateStatus.NEGATIVE_RATING, result);
+        } catch (Exception e) {
+
+        }
     }
 
     @Test
     public void testRatingUpdateMissingEpisode() {
-        when(seriesRepository.findTitleId("testSeries", "tvSeries")).thenReturn("t1");
-        String result = (String)seriesController.updateEpisodeRating("testSeries",1, 5, -5).getBody();
-        assertEquals(RatingUpdateStatus.MISSING_EPISODE, result);
+        try {
+            when(seriesRepository.findTitleId("testSeries", "tvSeries").get()).thenReturn("t1");
+            String result = (String) seriesController.updateEpisodeRating("testSeries", 1, 5, -5).getBody();
+            assertEquals(RatingUpdateStatus.MISSING_EPISODE, result);
+        } catch (Exception e) {
+
+        }
     }
 
     @Test
     public void testRatingUpdateMissingTitle() {
-        when(seriesRepository.findEpisodeId("testSeries",1, 5)).thenReturn("e1");
-        String result = (String)seriesController.updateEpisodeRating("testSeries",1, 5, -5).getBody();
-        assertEquals(RatingUpdateStatus.MISSING_TITLE, result);
+        try {
+            when(seriesRepository.findEpisodeId("testSeries", 1, 5).get()).thenReturn("e1");
+            String result = (String) seriesController.updateEpisodeRating("testSeries", 1, 5, -5).getBody();
+            assertEquals(RatingUpdateStatus.MISSING_TITLE, result);
+        } catch (Exception e) {
+
+        }
     }
 
 }

@@ -1,6 +1,7 @@
 package com.netflix.movieapi.dao;
 
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 
 import com.netflix.movieapi.entities.Titles;
 import com.netflix.movieapi.view.Cast;
@@ -17,9 +18,9 @@ public interface TitlesRepository extends CrudRepository<Titles, String> {
     @Query(value = "SELECT * FROM titles WHERE title_name = ?1 AND title_type = ?2", nativeQuery = true)
     List<Titles> findTitleByName(String name, String title_type);
 
-    @Async
+    @Async("threadPoolTaskExecutor")
     @Query(value = "SELECT title_id FROM titles WHERE title_name = ?1 AND title_type = ?2 LIMIT 1", nativeQuery = true)
-    String findTitleId(String name, String title_type);
+    CompletableFuture<String> findTitleId(String name, String title_type);
 
 
     @Query(value = "SELECT c.cast_id as CastId,c.cast_name as CastName FROM title_cast tc, titles t, casts c " +
