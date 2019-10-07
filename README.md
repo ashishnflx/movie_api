@@ -29,6 +29,8 @@ The service also has the capability to update episode ratings which would impact
           You can run it seperately, I have disabled it on build currently.  
           If you would like to enable it during build, please enable this  
           <maven.test.skip>true</maven.test.skip>
+          
+   Link for test response: https://github.com/ashishnflx/movie_api/blob/master/movie-api/test_response.png. 
    
    STEP FOR PRODUCTION MIGRATION:	
 6. Initialise data by running sql script. (NOT NEEDED)  
