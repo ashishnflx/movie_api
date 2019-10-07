@@ -23,7 +23,8 @@ CREATE TABLE IF NOT EXISTS movie_api_schema.casts (
 LOAD DATA LOCAL INFILE 'cast_filter.tsv'
 INTO TABLE movie_api_schema.casts
 FIELDS TERMINATED BY '\t'
-LINES TERMINATED BY '\n';
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES;
 
 CREATE TABLE IF NOT EXISTS movie_api_schema.title_cast (
     title_id VARCHAR(20) NOT NULL,
