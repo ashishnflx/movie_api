@@ -16,7 +16,7 @@ echo "Preprocessing not needed $inpath/titles_episode.tsv"
 cp -f $inpath/titles_episode.tsv $outpath/titles_episode_filter.tsv || exit $?
 echo "Copied to $outpath/titles_episode_filter.tsv"
 
-echo "Preprocessing not needed $inpath/titles_ratings.tsv"
-cp -f $inpath/titles_ratings.tsv $outpath/titles_ratings_filter.tsv || exit $?
-echo "Copied to $outpath/titles_ratings_filter.tsv"
+echo "Preprocessing $inpath/titles_ratings.tsv"
+cut -d$'\t' -f1-2 $inpath/titles_ratings.tsv > $outpath/titles_ratings_filter.tsv || exit $?
+echo "Processed and stored to $outpath/titles_ratings_filter.tsv"
 

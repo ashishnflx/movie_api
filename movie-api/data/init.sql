@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS movie_api_schema.episode (
     FOREIGN KEY (episode_id) REFERENCES titles(title_id)
 );
 
-LOAD DATA LOCAL INFILE 'titles_episode.tsv'
+LOAD DATA LOCAL INFILE 'titles_episode_filter.tsv'
 INTO TABLE movie_api_schema.episode
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n'
@@ -61,12 +61,11 @@ CREATE TABLE IF NOT EXISTS movie_api_schema.title_rating (
     FOREIGN KEY (title_id) REFERENCES titles(title_id)
 );
 
-LOAD DATA LOCAL INFILE 'titles_ratings.tsv'
+LOAD DATA LOCAL INFILE 'titles_ratings_filter.tsv'
 INTO TABLE movie_api_schema.title_rating
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n'
 IGNORE 1 LINES
-(@col1,@col2,@col3) set title_id=@col1,title_rating=@col2
 ;
 
 CREATE TABLE IF NOT EXISTS movie_api_schema.season_rating (
