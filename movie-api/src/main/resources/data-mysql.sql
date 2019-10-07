@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS movie_api_schema.titles (
     INDEX(title_name)
 );
 
-LOAD DATA LOCAL INFILE 'titles_filter.tsv'
+LOAD DATA LOCAL INFILE 'data/titles_filter.tsv'
 INTO TABLE movie_api_schema.titles
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n'
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS movie_api_schema.casts (
     INDEX(cast_id)
 );
 
-LOAD DATA LOCAL INFILE 'cast_filter.tsv'
+LOAD DATA LOCAL INFILE 'data/cast_filter.tsv'
 INTO TABLE movie_api_schema.casts
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n'
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS movie_api_schema.title_cast (
     FOREIGN KEY (cast_id) REFERENCES casts(cast_id)
 );
 
-LOAD DATA LOCAL INFILE 'titles_cast_filter.tsv'
+LOAD DATA LOCAL INFILE 'data/titles_cast_filter.tsv'
 INTO TABLE movie_api_schema.title_cast
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n'
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS movie_api_schema.episode (
     FOREIGN KEY (episode_id) REFERENCES titles(title_id)
 );
 
-LOAD DATA LOCAL INFILE 'titles_episode_filter.tsv'
+LOAD DATA LOCAL INFILE 'data/titles_episode_filter.tsv'
 INTO TABLE movie_api_schema.episode
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n'
@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS movie_api_schema.title_rating (
     FOREIGN KEY (title_id) REFERENCES titles(title_id)
 );
 
-LOAD DATA LOCAL INFILE 'titles_ratings_filter.tsv'
+LOAD DATA LOCAL INFILE 'data/titles_ratings_filter.tsv'
 INTO TABLE movie_api_schema.title_rating
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n'
