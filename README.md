@@ -17,6 +17,7 @@ The service also has the capability to update episode ratings which would impact
 
 3. Start service once step #3 is done.
    Run - `./startserver.sh` 
+   NOTE - It takes 8 minutes to initialise the data.  
    
    
    STEP FOR PRODUCTION MIGRATION:	
@@ -49,11 +50,12 @@ The service also has the capability to update episode ratings which would impact
 |GET             |/series/{name}         |Returns information about the tvseries {name}|
 |GET             |/series/{name}/cast    |Returns the cast list of the tvseries {name}|
 |GET             |/series/{name}/season  |Returns all available seasons of the series {name} (Note as the data is 2017 year only, it might have only 1 season.)|
-|GET             |/series/{name}/season/{seasonName}            |Returns all information of the season {seasonName}|
-|GET             |/series/{name}/season/{seasonName}/rating     |Returns the rating of the season|
-|GET             |/series/{name}/season/{seasonName}/episode    |Returns all the episodes of the season|
-|GET             |/series/{name}/season/{seasonName|/episode/{episodeName}/rating |Returns the rating of the episode|
-|PUT             |/series/{name}/season/{seasonName}/episode/{episodeName}/rating/{newRating} | Updates rating of the episode to {newRating}|
+|GET             |/series/{name}/season/{seasonNum}            |Returns all information of the season {seasonNum}|
+|GET             |/series/{name}/season/{seasonNum}/rating     |Returns the rating of the season|
+|GET             |/series/{name}/season/{seasonNum}/episode    |Returns all the episodes of the season|
+|GET             |/series/{name}/season/{seasonNum}/episode/{episodeNum}/rating |Returns the rating of the episode|
+|PUT             |/series/{name}/season/{seasonNum}/episode/{episodeNum}/rating/{newRating} | Updates rating of the episode to {newRating}|
+
 
 # Database Design
    
