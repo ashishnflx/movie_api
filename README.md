@@ -21,10 +21,17 @@ The service also has the capability to update episode ratings which would impact
 
 4. Start service once step #3 is done.
    Run - `./startserver.sh` 
-   NOTE - It takes 8 minutes to initialise the data.    
+   NOTE - It takes 8 minutes to initialise the data.
+ 
+5. Test requests on service once step #4 is done.
+   Run - `. movie-api/src/test/movie_api_requests.sh` 
+   NOTE - Integration tests and unit tests are also included in the project. 
+          You can run it seperately, I have disabled it on build currently.  
+          If you would like to enable it during build, please enable this  
+          <maven.test.skip>true</maven.test.skip>
    
    STEP FOR PRODUCTION MIGRATION:	
-5. Initialise data by running sql script. (NOT NEEDED)  
+6. Initialise data by running sql script. (NOT NEEDED)  
 
    THIS STEP IS NOT NEEDED NOW. ITS ONLY USED DURING PRODUCTION MIGRATION.   
    Run - `. data/initdata.sh`  
