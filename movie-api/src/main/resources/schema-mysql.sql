@@ -1,3 +1,5 @@
+DROP SCHEMA IF EXISTS movie_api_schema;
+
 CREATE SCHEMA IF NOT EXISTS movie_api_schema;
 
 SET GLOBAL local_infile = 'ON';
