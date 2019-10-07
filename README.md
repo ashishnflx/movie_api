@@ -76,7 +76,7 @@ Response: It will update the rating of this episode which impacts season ratings
 
 # Database Design
    
-  https://github.com/ashishnflx/movie_api/edit/master/model.pdf
+  https://github.com/ashishnflx/movie_api/blob/master/movie-api/model.pdf
   
   I created two columns, rating_sum and num_of_episodes for a season.
   This will prevent us on locking the table to get total episodes and doing the total sum of ratings for that season.
