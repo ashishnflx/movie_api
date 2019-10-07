@@ -57,6 +57,19 @@ The service also has the capability to update episode ratings which would impact
 |PUT             |/series/{name}/season/{seasonNum}/episode/{episodeNum}/rating/{newRating} | Updates rating of the episode to {newRating}|
 
 
+|Req type        |Resource                                     | Response                                                             | 
+|----------------|---------------------------------------------|----------------------------------------------------------------------| 
+|GET             |/movie/Samantaral                            |[{"titleId":"tt7746986","titleName":"Samantaral","titleType":"movie"}]| 
+|GET             |/movie/Samantaral/rating                     |"{\"titleRating\":\"7.6\",\"titleName\":\"Samantaral\"}"| 
+|GET             |/series/Regular%20Show/                      |[{"titleId":"tt1710308","titleName":"Regular Show","titleType":"tvSeries"}]| 
+|GET             |/series/Stella/season                        |[{"seasonNum":6,"seasonRating":7.62}]| 
+|GET             |/series/Stella/season/6/rating               |{"seasonNum":6,"seasonRating":7.62}| 
+|GET             |/series/Stella/season/6/episode              |[{"rating":7.2,"episodeNum":1},{"rating":7.6,"episodeNum":2},{"rating":7.2,"episodeNum":3}, 
+                                                               |{"rating":7.6,"episodeNum":4},{"rating":8.0,"episodeNum":5},{"rating":8.1,"episodeNum":6}]| 
+|GET             |/series/Stella/season/6/episode/2/rating     |{"episodeNum":2,"rating":7.6}| 
+|PUT             |/series/Stella/season/6/episode/2/rating/7.6 | HttpStatus.OK | 
+
+
 # Issue to be fixed  
   
   1. Non fatal error during server initialisation complaining about key length of jpa entity.  
