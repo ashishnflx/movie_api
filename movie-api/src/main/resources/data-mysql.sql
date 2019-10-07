@@ -38,3 +38,5 @@ FROM movie_api_schema.title_rating t
 INNER JOIN movie_api_schema.episode e
 ON t.title_id = e.episode_id
 GROUP BY e.season_num, e.title_id;
+
+SET FOREIGN_KEY_CHECKS = 1;
