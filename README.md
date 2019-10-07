@@ -15,13 +15,17 @@ The service also has the capability to update episode ratings which would impact
    Do `which mvn` to check if its in the path. Otherwise link mvn binary to your path  
    Mac shortcut to installation cmd: `brew install maven`
 
-3. Start service once step #3 is done.
+3. You can skip this step if you don't need the complete dataset (might be missing casts) because casts files are large. 
+   a. Download data from http://www.imdb.com/interfaces 
+   b. Run - `. movie-api/data/preprocessor.sh <input directory i.e directory path of a.> <absolute path to movie-api/data directory>`
+
+4. Start service once step #3 is done.
    Run - `./startserver.sh` 
-   NOTE - It takes 8 minutes to initialise the data.  
-   
+   NOTE - It takes 8 minutes to initialise the data. Don't get worried if you see error for large key, its non fatal error and will  
+          be fixed later.   
    
    STEP FOR PRODUCTION MIGRATION:	
-4. Initialise data by running sql script. (NOT NEEDED)  
+5. Initialise data by running sql script. (NOT NEEDED)  
 
    THIS STEP IS NOT NEEDED NOW. ITS ONLY USED DURING PRODUCTION MIGRATION.   
    Run - `. data/initdata.sh`  
