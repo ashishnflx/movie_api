@@ -21,8 +21,7 @@ The service also has the capability to update episode ratings which would impact
 
 4. Start service once step #3 is done.
    Run - `./startserver.sh` 
-   NOTE - It takes 8 minutes to initialise the data. Don't get worried if you see error for large key, its non fatal error and will  
-          be fixed later.   
+   NOTE - It takes 8 minutes to initialise the data.    
    
    STEP FOR PRODUCTION MIGRATION:	
 5. Initialise data by running sql script. (NOT NEEDED)  
@@ -73,13 +72,6 @@ The service also has the capability to update episode ratings which would impact
 |PUT             |/series/Stella/season/6/episode/2/rating/7.6 | HttpStatus.OK | 
 
 
-# Issue to be fixed  
-  
-  1. Non fatal error during server initialisation complaining about key length of jpa entity.  
-  2. Before running integration tests, we need to change application.properties - spring.datasource.initialize=false, spring.jpa.hibernate.ddl-auto=none  
-  spring.datasource.initialization-mode=never.  
-  3. Some more exception handling  
-  
 
 # Database Design
    
