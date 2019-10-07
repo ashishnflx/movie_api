@@ -1,5 +1,7 @@
 CREATE SCHEMA IF NOT EXISTS movie_api_schema;
 
+SET GLOBAL local_infile = 'ON';
+
 CREATE TABLE IF NOT EXISTS movie_api_schema.titles (
     title_id VARCHAR(20) PRIMARY KEY,
     title_type VARCHAR(10) NOT NULL,
@@ -7,11 +9,11 @@ CREATE TABLE IF NOT EXISTS movie_api_schema.titles (
     INDEX(title_name)
 );
 
-LOAD DATA LOCAL INFILE '/Users/ashishsinha/Downloads/titles_3.tsv'
+LOAD DATA LOCAL INFILE 'titles_filter.tsv'
 INTO TABLE movie_api_schema.titles
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n'
-IGNORE 1 LINES;
+;
 
 CREATE TABLE IF NOT EXISTS movie_api_schema.casts (
     cast_id VARCHAR(20) PRIMARY KEY,
@@ -19,7 +21,7 @@ CREATE TABLE IF NOT EXISTS movie_api_schema.casts (
     INDEX(cast_id)
 );
 
-LOAD DATA LOCAL INFILE '/Users/ashishsinha/Downloads/cast_2.tsv'
+LOAD DATA LOCAL INFILE 'cast_filter.tsv'
 INTO TABLE movie_api_schema.casts
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n'
@@ -33,11 +35,11 @@ CREATE TABLE IF NOT EXISTS movie_api_schema.title_cast (
     FOREIGN KEY (cast_id) REFERENCES casts(cast_id)
 );
 
-LOAD DATA LOCAL INFILE '/Users/ashishsinha/Downloads/titles_cast_3.tsv'
+LOAD DATA LOCAL INFILE 'titles_cast_filter.tsv'
 INTO TABLE movie_api_schema.title_cast
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n'
-IGNORE 1 LINES;
+;
 
 CREATE TABLE IF NOT EXISTS movie_api_schema.episode (
     episode_id VARCHAR(20) PRIMARY KEY,
@@ -49,7 +51,7 @@ CREATE TABLE IF NOT EXISTS movie_api_schema.episode (
     FOREIGN KEY (episode_id) REFERENCES titles(title_id)
 );
 
-LOAD DATA LOCAL INFILE '/Users/ashishsinha/Downloads/titles_episode.tsv'
+LOAD DATA LOCAL INFILE 'titles_episode_filter.tsv'
 INTO TABLE movie_api_schema.episode
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n'
@@ -61,16 +63,14 @@ CREATE TABLE IF NOT EXISTS movie_api_schema.title_rating (
     FOREIGN KEY (title_id) REFERENCES titles(title_id)
 );
 
-LOAD DATA LOCAL INFILE '/Users/ashishsinha/Downloads/titles_ratings.tsv'
+LOAD DATA LOCAL INFILE 'titles_ratings_filter.tsv'
 INTO TABLE movie_api_schema.title_rating
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n'
-IGNORE 1 LINES
-(@col1,@col2,@col3) set title_id=@col1,title_rating=@col2
-;
+IGNORE 1 LINES;
 
 CREATE TABLE IF NOT EXISTS movie_api_schema.season_rating (
-	season_num INT NOT NULL,
+   season_num INT NOT NULL,
     title_id VARCHAR(20) NOT NULL,
     num_of_episodes INT,
     rating_sum DOUBLE,
