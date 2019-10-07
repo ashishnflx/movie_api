@@ -57,6 +57,14 @@ The service also has the capability to update episode ratings which would impact
 |PUT             |/series/{name}/season/{seasonNum}/episode/{episodeNum}/rating/{newRating} | Updates rating of the episode to {newRating}|
 
 
+# Issue to be fixed  
+  
+  1. Non fatal error during server initialisation complaining about key length of jpa entity.  
+  2. Before running integration tests, we need to change application.properties - spring.datasource.initialize=false, spring.jpa.hibernate.ddl-auto=none  
+  spring.datasource.initialization-mode=never.  
+  3. Some more exception handling  
+  
+
 # Database Design
    
   https://github.com/ashishnflx/movie_api/blob/master/movie-api/model.pdf
