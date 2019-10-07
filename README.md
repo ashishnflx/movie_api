@@ -65,7 +65,6 @@ The service also has the capability to update episode ratings which would impact
 |GET             |/series/Stella/season                        |[{"seasonNum":6,"seasonRating":7.62}]| 
 |GET             |/series/Stella/season/6/rating               |{"seasonNum":6,"seasonRating":7.62}| 
 |GET             |/series/Stella/season/6/episode              |[{"rating":7.2,"episodeNum":1},{"rating":7.6,"episodeNum":2},{"rating":7.2,"episodeNum":3}, 
-                                                               |{"rating":7.6,"episodeNum":4},{"rating":8.0,"episodeNum":5},{"rating":8.1,"episodeNum":6}]| 
 |GET             |/series/Stella/season/6/episode/2/rating     |{"episodeNum":2,"rating":7.6}| 
 |PUT             |/series/Stella/season/6/episode/2/rating/7.6 | HttpStatus.OK | 
 
