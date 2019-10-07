@@ -45,8 +45,8 @@ public class SeriesControllerIntegrationTest {
     public void testSeasons() throws Exception {
         HttpEntity<String> entity = new HttpEntity<String>(null, headers);
         ResponseEntity<String> response = restTemplate.exchange(
-                createURLWithPort("/series/Regular Show/season"), HttpMethod.GET, entity, String.class);
-        String expected = "[{\"seasonNum\":8,\"seasonRating\":9.499999999999998}]";
+                createURLWithPort("/series/Stella/season"), HttpMethod.GET, entity, String.class);
+        String expected = "[{\"seasonNum\":6,\"seasonRating\":7.62}]";
         JSONAssert.assertEquals(expected, response.getBody(), false);
     }
 
@@ -54,8 +54,8 @@ public class SeriesControllerIntegrationTest {
     public void testSeasonRating() throws Exception {
         HttpEntity<String> entity = new HttpEntity<String>(null, headers);
         ResponseEntity<String> response = restTemplate.exchange(
-                createURLWithPort("/series/Regular Show/season/8/rating"), HttpMethod.GET, entity, String.class);
-        String expected = "{\"seasonNum\":8,\"seasonRating\":9.499999999999998}";
+                createURLWithPort("/series/Stella/season/6/rating"), HttpMethod.GET, entity, String.class);
+        String expected = "{\"seasonNum\":6,\"seasonRating\":7.62}";
         JSONAssert.assertEquals(expected, response.getBody(), false);
     }
 
@@ -63,9 +63,8 @@ public class SeriesControllerIntegrationTest {
     public void testSeasonEpisodes() throws Exception {
         HttpEntity<String> entity = new HttpEntity<String>(null, headers);
         ResponseEntity<String> response = restTemplate.exchange(
-                createURLWithPort("/series/Regular Show/season/8/episode"), HttpMethod.GET, entity, String.class);
-        String expected = "[{\"episodeNum\":24,\"rating\":8.9},{\"episodeNum\":25,\"rating\":9.4},{\"episodeNum\":26,\"rating\":9.5}," +
-                "{\"episodeNum\":27,\"rating\":9.9},{\"episodeNum\":28,\"rating\":9.7},{\"episodeNum\":29,\"rating\":9.6}]";
+                createURLWithPort("/series/Stella/season/6/episode"), HttpMethod.GET, entity, String.class);
+        String expected = "[{\"rating\":7.2,\"episodeNum\":1},{\"rating\":7.6,\"episodeNum\":2},{\"rating\":7.2,\"episodeNum\":3},{\"rating\":7.6,\"episodeNum\":4},{\"rating\":8.0,\"episodeNum\":5},{\"rating\":8.1,\"episodeNum\":6}]";
         JSONAssert.assertEquals(expected, response.getBody(), false);
     }
 
@@ -73,25 +72,31 @@ public class SeriesControllerIntegrationTest {
     public void testSeasonEpisodeRating() throws Exception {
         HttpEntity<String> entity = new HttpEntity<String>(null, headers);
         ResponseEntity<String> response = restTemplate.exchange(
-                createURLWithPort("/series/Regular Show/season/8/episode/24/rating"), HttpMethod.GET, entity, String.class);
-        String expected = "{\"episodeNum\":24,\"rating\":8.9}";
+                createURLWithPort("/series/Stella/season/6/episode/2/rating"), HttpMethod.GET, entity, String.class);
+        String expected = "{\"episodeNum\":2,\"rating\":7.6}";
         JSONAssert.assertEquals(expected, response.getBody(), false);
     }
 
     @Test
     public void testUpdateRating() throws Exception {
         HttpEntity<String> entity = new HttpEntity<String>(null, headers);
+        ResponseEntity<String> responseOld = restTemplate.exchange(
+                createURLWithPort("/series/Stella/season/6/episode/2/rating"), HttpMethod.GET, entity, String.class);
         ResponseEntity<String> response = restTemplate.exchange(
-                createURLWithPort("/series/Regular Show/season/8/episode/24/rating/8.9"), HttpMethod.PUT, entity, String.class);
+                createURLWithPort("/series/Stella/season/6/episode/2/rating/9.7"), HttpMethod.PUT, entity, String.class);
         assertEquals(200, response.getStatusCodeValue());
         ResponseEntity<String> responseNew = restTemplate.exchange(
-                createURLWithPort("/series/Regular Show/season/8/episode/24/rating"), HttpMethod.GET, entity, String.class);
-        String expectedNew = "{\"episodeNum\":24,\"rating\":8.9}";
+                createURLWithPort("//series/Stella/season/6/episode/2/rating"), HttpMethod.GET, entity, String.class);
+        String expectedNew = "{\"episodeNum\":2,\"rating\":9.7}";
         JSONAssert.assertEquals(expectedNew, responseNew.getBody(), false);
         ResponseEntity<String> responseSeasonRating = restTemplate.exchange(
-                createURLWithPort("/series/Regular Show/season/8/rating"), HttpMethod.GET, entity, String.class);
-        String expectedSeasonRating = "{\"seasonNum\":8,\"seasonRating\":9.499999999999998}";
-        JSONAssert.assertEquals(expectedSeasonRating, responseSeasonRating.getBody(), false);
+                createURLWithPort("/series/Stella/season/6/rating"), HttpMethod.GET, entity, String.class);
+        String expectedSeasonRating = "{\"seasonNum\":6,\"seasonRating\":7.62}";
+
+        JSONAssert.assertNotEquals(expectedSeasonRating, responseSeasonRating.getBody(), false);
+        ResponseEntity<String> responseUpd = restTemplate.exchange(
+                createURLWithPort("/series/Stella/season/6/episode/2/rating/7.6"), HttpMethod.PUT, entity, String.class);
+        assertEquals(200, responseUpd.getStatusCodeValue());
     }
 
 

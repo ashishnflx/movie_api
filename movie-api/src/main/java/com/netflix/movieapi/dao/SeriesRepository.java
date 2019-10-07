@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface SeriesRepository extends TitlesRepository {
 
-    @Query(value = "SELECT s.season_num as SeasonNum, s.rating_sum / s.num_of_episodes as SeasonRating " +
+    @Query(value = "SELECT s.season_num as SeasonNum, round(s.rating_sum / s.num_of_episodes,2) as SeasonRating " +
             "FROM season_rating s, titles t " +
             "where t.title_id = s.title_id and t.title_name = ?1", nativeQuery = true)
     List<Season> findSeasons(String name);
@@ -20,7 +20,7 @@ public interface SeriesRepository extends TitlesRepository {
             "AND s.title_name = ?1 AND e.season_num = ?2", nativeQuery = true)
     List<Episode> findEpisodes(String name, int sNum);
 
-    @Query(value = "SELECT s.season_num as SeasonNum, s.rating_sum / s.num_of_episodes as SeasonRating " +
+    @Query(value = "SELECT s.season_num as SeasonNum, round(s.rating_sum / s.num_of_episodes, 2) as SeasonRating " +
             "FROM season_rating s, titles t " +
             "where t.title_id = s.title_id and t.title_name = ?1 and s.season_num = ?2 LIMIT 1", nativeQuery = true)
     Season findSeasonRating(String titleName, int season);
