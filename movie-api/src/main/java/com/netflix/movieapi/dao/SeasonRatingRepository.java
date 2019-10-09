@@ -1,6 +1,8 @@
 package com.netflix.movieapi.dao;
 
 import javax.persistence.EntityManager;
+import javax.persistence.LockModeType;
+
 import com.netflix.movieapi.entities.*;
 import com.netflix.movieapi.entities.compositekey.SeasonRatingKey;
 import com.netflix.movieapi.exceptions.RatingUpdateException;
@@ -23,7 +25,7 @@ public class SeasonRatingRepository {
 
     public SeasonRatings findSeasonRating(int seasonNumber, String titleId) {
         SeasonRatingKey sk = new SeasonRatingKey(seasonNumber, titleId);
-        return this.entityManager.find(SeasonRatings.class, sk);
+        return this.entityManager.find(SeasonRatings.class, sk, LockModeType.PESSIMISTIC_WRITE);
     }
 
     @Transactional(propagation = Propagation.MANDATORY )
@@ -39,11 +41,7 @@ public class SeasonRatingRepository {
 
 
     @Transactional(propagation = Propagation.MANDATORY)
-    public void updateSeasonRating(int seasonNum, String titleId, double ratingDiff) throws RatingUpdateException {
-        SeasonRatings season = this.findSeasonRating(seasonNum, titleId);
-        if (season == null) {
-            throw new RatingUpdateException("Season not found " + seasonNum);
-        }
+    public void updateSeasonRating(SeasonRatings season, double ratingDiff) {
         double seasonRating = season.getRatingSum();
         if(seasonRating + ratingDiff < 0)
             season.setRatingSum(0);
@@ -62,14 +60,18 @@ public class SeasonRatingRepository {
         both entities.
         In the first step we update episode rating and get old episode rating
         In second step we calculate difference of new episode rating and old episode rating and add it to season rating
-
      */
+
 
     @Transactional(propagation = Propagation.REQUIRES_NEW,
             rollbackFor = RatingUpdateException.class)
     public void updateRating(String titleId, String episodeId, int seasonNumber, double rating) throws RatingUpdateException {
+        SeasonRatings season = this.findSeasonRating(seasonNumber, titleId);
+        if (season == null) {
+            throw new RatingUpdateException("Season not found " + seasonNumber);
+        }
         double oldRating = updateEpisodeRating(episodeId, rating);
-        updateSeasonRating(seasonNumber, titleId, rating - oldRating);
+        updateSeasonRating(season, rating - oldRating);
     }
 
 }
